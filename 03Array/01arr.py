@@ -1,0 +1,3 @@
+# ROTATE THE ARRAY BY K PLACES
+
+print("hii")
