@@ -512,7 +512,45 @@ const longest = (nums) => {
       currCount = 1;
     }
   }
-  return longSeq
+  return longSeq;
 };
 
-console.log(longest([0,3,7,2,5,8,4,6,0,1]))
+// console.log(longest([0,3,7,2,5,8,4,6,0,1]))
+
+// LONGEST SUBARRAY WITH SUM k
+// const withSumK = (nums, k) => {
+//   let count = 0;
+//   for (let i = 0; i < nums.length; i++) {
+//     sum = 0;
+//     ct = 0;
+//     for (let j = i; j < nums.length; j++) {
+//       sum += nums[i];
+//       if (sum === k) {
+//         count++;
+//       }
+//     }
+//   }
+//   return count;
+// };
+
+const withSumK = (nums, k) => {
+  let count = 0;
+  let pfxSum = 0;
+  let pfxHash = new Map();
+  pfxHash.set(pfxSum, 0);
+
+  for (let i = 0; i < nums.length; i++) {
+    pfxSum += nums[i];
+
+    if (pfxHash.has(pfxSum - k)) {
+      count += pfxHash.get(pfxSum - k); 
+    }
+
+    pfxHash.set(pfxSum, (pfxHash.get(pfxSum) || 0) + 1);
+  }
+
+  console.log(pfxHash)
+  return count;
+};
+
+console.log(withSumK([1, 2, 3, -3, 1, 1, 1, 4, 2, -3], 3), "hi");
