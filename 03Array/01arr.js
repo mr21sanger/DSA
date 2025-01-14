@@ -401,7 +401,7 @@ const countSubArrOpt = (nums, k) => {
 };
 
 // Test Cases
-console.log(countSubArrOpt([1], 0)); // Output: 0
+// console.log(countSubArrOpt([1], 0)); // Output: 0
 
 // REARRANGE ELEMENTS BY SIGN (NO EQUAL NUMBER OF +VE AND -VE)
 const reArrangeUnequal = (nums) => {
@@ -543,14 +543,84 @@ const withSumK = (nums, k) => {
     pfxSum += nums[i];
 
     if (pfxHash.has(pfxSum - k)) {
-      count += pfxHash.get(pfxSum - k); 
+      count += pfxHash.get(pfxSum - k);
     }
 
     pfxHash.set(pfxSum, (pfxHash.get(pfxSum) || 0) + 1);
   }
 
-  console.log(pfxHash)
   return count;
 };
 
-console.log(withSumK([1, 2, 3, -3, 1, 1, 1, 4, 2, -3], 3), "hi");
+// console.log(withSumK([1, 2, 3, -3, 1, 1, 1, 4, 2, -3], 3), "hi");
+
+// PASCAL TRIANGLE
+
+// a.) GIVE THE NTH ELEMENT IN NTH ROW NTH COLUMN IN A PASCAL TRIANGLE
+
+const nElement = (row, col) => {
+  let n = row - 1;
+  let r = col - 1;
+  let res = 1;
+  for (let i = 0; i < r; i++) {
+    res = res * (n - i);
+    res = res / (i + 1);
+  }
+  return res;
+};
+
+// console.log(nElement(5, 3));
+
+// PRINT NTH ROW OF THE PASCAL TRIANGLE
+const nthRow = (n) => {
+  let ans = [];
+  ans.push(1);
+  let a = 1;
+  for (let i = 1; i < n; i++) {
+    a = a * (n - i);
+    a = a / i;
+    ans.push(a);
+  }
+  return ans;
+};
+
+// console.log(nthRow(5))
+
+// PRINT WHOLE PASCAL TRIANGLE
+
+const pascalTriangle = (row) => {
+  let ans = [];
+  for (let i = 1; i < row; i++) {
+    let temp = [];
+    for (let j = 1; j < i + 1; j++) {
+      temp.push(nElement(i, j));
+    }
+    ans.push(temp);
+  }
+  return ans;
+};
+
+const pascalTriangleOptimal = (n) => {
+  let ans = [];
+  for (let i = 1; i < n; i++) {
+    ans.push(nthRow(i));
+  }
+  return ans;
+};
+// console.log(pascalTriangleOptimal(5));
+
+// MAJORITY ELEMENT K
+const majority2 = (nums) => {
+  let hash = new Map();
+  for (let i = 0; i < nums.length; i++) {
+    hash.set(nums[i], (hash.get(nums[i]) || 0) + 1);
+  }
+  console.log(hash);
+
+  for (let [key, values] of hash) {
+    if (values > nums.length / 3) return key;
+  }
+  return -1;
+};
+
+console.log(majority2([3, 2, 3]));
